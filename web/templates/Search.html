@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="static/css/search.css" />
+    <link rel="stylesheet" href="static/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="static/Flat-UI/dist/css/flat-ui.min.css"/>
+    <script src="static/bootstrap/dist/js/jquery-1.11.3.min.js"></script>
+    <script src="static/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="static/Flat-UI/dist/js/flat-ui.min.js"></script>
+    <title></title>
+    <style>
+       .row{
+           margin-top: 20px;;
+        }
+        p {
+            white-space:nowrap;
+            word-wrap:break-word;
+            word-break:break-all;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .center{
+            text-align: center;
+        }
+        .pagination{
+            background: #cccccc;
+        }
+    </style>
+    <script>
+        $(function(){
+            $('#myTabs a').click(function (e) {
+                $(this).tab('show')
+            });
+        })
+    </script>
+</head>
+<body>
+<!-- Static navbar -->
+<div class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">这什么东西</span>
+            </button>
+            <a class="navbar-brand" href="/">图书推荐系统</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/">首页</a></li>
+                <li><a href="/historical">历史评分</a></li>
+                <li><a href="/user">个人中心</a></li>
+            </ul>
+            {% if not login %}
+                <ul class="nav navbar-nav navbar-right hidden-sm">
+                    <li><a href="/loginForm">登录</a></li>
+                    <li><a href="/registerationForm">注册</a></li>
+                    <li>
+                        <a href="/order"><span class="glyphicon glyphicon-shopping-cart">书单</span></a></li>
+                </ul>
+            {% else %}
+                <ul class="nav navbar-nav navbar-right hidden-sm">
+                    <li><a>{{ useid }}</a></li>
+                    <li><a href="/logout">注销</a></li>
+                    <li>
+                        <a href="/order"><span class="glyphicon glyphicon-shopping-cart">书单</span></a></li>
+                </ul>
+            {% endif %}
+        </div><!--/.nav-collapse -->
+    </div>
+</div>
+<!--content-->
+<div class="container" >
+    <div class="jumbotron">
+        <h3 align="center">智能图书推荐系统</h3>
+        <div class="search bar7">
+            <form action="/search" method="GET">
+                <p>
+                    {% if key %}
+                        <input type="text" name="keyword" value="{{key}}">
+                    {% else %}
+                        <input type="text" name="keyword" >
+                    {% endif %}
+                     <button type="submit"></button>
+                </p>
+            </form>
+        </div>
+    </div>
+    <div class="row"> 
+        {% if not books %}
+            <p><a href="/loginForm" class="btn btn-primary btn-block" role="button" >查询结果为空</a></p>    
+        {% else %}
+        {% for book in books %}
+        <div class="col-xs-7">
+            <div class="thumbnail" >
+                <a href="/bookinfo?bookid={{book[2]}}">
+                    <img style="width: 60%; height: 400px; display: block;" alt="100%x200" src="{{book[3]}}" >
+                </a>
+                <div class="caption center">
+                    <p >{{book[0]}}</p>
+                    <p><span>作者:</span><span>{{book[1]}}</span></p>
+                    <p><a href="/bookinfo?bookid={{book[2]}}" bookid="{{book[2]}}" class="btn btn-primary btn-block" role="button" >查看详情</a></p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+
+</div>
+
+
+</body>
+</html>

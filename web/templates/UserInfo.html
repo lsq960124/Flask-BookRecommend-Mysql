@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="static/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="static/Flat-UI/dist/css/flat-ui.min.css"/>
+    <script src="static/Flat-UI/dist/js/vendor/jquery.min.js"></script>
+    <script src="static/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="static/Flat-UI/dist/js/flat-ui.min.js"></script>
+    <title></title>
+    <style>
+        .row{
+            margin-left: 20px;
+            margin-right: 20px;;
+        }
+        .line-center{
+            line-height:50px;
+            text-align: center;
+        }
+        .row{
+            margin-left: 20px;
+            margin-right: 20px;;
+        }
+        
+        .list-group-item:hover{
+            background: #27ae60;
+
+        }
+        .list-group-item div:first-child:hover{
+
+            cursor: pointer;
+        }
+        th{
+            text-align: right;
+            width: 10%;;
+            padding: 10px;
+        }
+        td{
+            text-align: left;
+            width: 30%;;
+            padding: 10px;
+        }
+        .table th{
+            text-align: center;
+        }
+        .table td{
+            text-align: center;
+        }
+    </style>
+    <script>
+        function myClick(n){
+            location.href = "/bookinfo";
+        }
+        function btnClick(){
+            alert("btn");
+            return false;
+        }
+        $(function(){
+
+        })
+    </script>
+    <script>
+        $(function(){
+            $('#myTabs a').click(function (e) {
+
+                $(this).tab('show')
+            });
+        })
+    </script>
+</head>
+<body>
+<!-- Static navbar -->
+<div class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">这什么东西</span>
+            </button>
+            <a class="navbar-brand" href="/">图书推荐系统</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/">首页</a></li>
+                <li><a href="/historical">历史评分</a></li>
+                <li><a href="/user">个人中心</a></li>
+            </ul>
+            {% if not login %}
+                <ul class="nav navbar-nav navbar-right hidden-sm">
+                    <li><a href="/loginForm">登录</a></li>
+                    <li><a href="/registerationForm">注册</a></li>
+                    <li>
+                        <a href="/order"><span class="glyphicon glyphicon-shopping-cart">书单</span></a></li>
+                </ul>
+            {% else %}
+                <ul class="nav navbar-nav navbar-right hidden-sm">
+                    <li><a>{{ useid }}</a></li>
+                    <li><a href="/logout">注销</a></li>
+                    <li>
+                        <a href="/order"><span class="glyphicon glyphicon-shopping-cart">书单</span></a></li>
+                </ul>
+            {% endif %}
+        </div><!--/.nav-collapse -->
+    </div>
+</div>
+<!--content-->
+<div class="container">
+    <div class="row thumbnail center col-sm-12">
+        <div class="col-sm-12">
+            <h1 class="text-center" style="margin-bottom: 30px">个人中心</h1>
+        </div>
+
+        <ul class="nav nav-tabs nav-justified" id="myTabs">
+            <li class="active"><a href="#userHome" >个人中心</a></li>
+            <li><a href="#editInfo">信息修改</a></li>
+            <li><a href="#editPassword">密码修改</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="userHome">
+                <div class="col-sm-6">
+                    <form class="form-horizontal caption" action="/register" method="POST" onsubmit="return validate()">
+                    <div class="form-group">
+                        <label for="username" class="col-sm-3 control-label">用户名:</label>
+                        <div class="col-sm-8"><p>{{userinfo[0]}}</p></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="col-sm-3 control-label">所在地区/密码:</label>
+                        <div class="col-sm-8"><p>{{userinfo[1]}}</p></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="col-sm-3 control-label">年龄:</label>
+                        <div class="col-sm-8"><p>{{userinfo[2]}}</p></div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="editInfo">
+                <div class="col-sm-6">
+                    <form class="form-horizontal caption" action="/editinfo" method="POST" onsubmit="return validate()">
+                        <div class="form-group">
+                            <label for="username" class="col-sm-3 control-label">用户名:</label>
+                                <div class="col-sm-8"><p>{{userinfo[0]}}</p></div>
+                            </div>
+                        <div class="form-group">
+                            <label for="password" class="col-sm-3 control-label">所在地区</label>
+                                <div class="col-sm-8">
+                                    <input type="password" class="form-control" name="password" placeholder="{{userinfo[1]}}">
+                                </div>
+                            </div>
+                        <div class="form-group">
+                            <label for="password" class="col-sm-3 control-label">年龄</label>
+                                <div class="col-sm-8">
+                                    <input type="age" class="form-control" name="age" placeholder="{{userinfo[2]}}">
+                                </div>
+                            </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-5">
+                                    <button type="submit" class="btn btn-success btn-block">提交</button>
+                                </div>
+                            </div>
+                    </form>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="editPassword">
+               <div class="col-sm-6">
+                    <form class="form-horizontal caption" action="/editpassword" method="POST" onsubmit="return validate()">
+                        <div class="form-group">
+                            <label for="username" class="col-sm-3 control-label">用户名:</label>
+                                <div class="col-sm-8"><p>{{userinfo[0]}}</p></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="col-sm-3 control-label">新密码</label>
+                                <div class="col-sm-8">
+                                    <input type="password" class="form-control" name="password1" placeholder="新密码">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="col-sm-3 control-label">确认新密码</label>
+                                <div class="col-sm-8">
+                                    <input type="password" class="form-control" name="password2" placeholder="确认新密码">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-5">
+                                    <button type="submit" class="btn btn-success btn-block">提交</button>
+                                </div>
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

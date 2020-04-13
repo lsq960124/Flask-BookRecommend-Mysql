@@ -1,0 +1,62 @@
+div.search {padding: 30px 0;}
+
+form {
+    position: relative;
+    width: 300px;
+    margin: 0 auto;
+}
+
+input, button {
+    border: none;
+    outline: none;
+
+}
+
+input {
+    width: 100%;
+    height: 35px;
+    padding-left: 8px;
+
+}
+
+button {
+    height: 100%;
+    width: 35px;
+    cursor: pointer;
+    position: absolute;
+ 
+}
+/*搜索框7*/
+.bar7 {
+    background: inherit;
+}
+.bar7 form {
+    height: 42px;
+}
+.bar7 input {
+    width: 250px;
+    border-radius: 42px;
+    border: 2px solid #324B4E;
+    background: #F9F0DA;
+    transition: .3s linear;
+    float: right;
+}
+.bar7 input:focus {
+    width: 300px;
+}
+.bar7 button {
+    background: none;
+    top: -2px;
+    right: 0;
+}
+.bar7 button:before{
+  content: "\f002";
+  font-family: FontAwesome;
+  color: #324b4e;
+}
+
+.jumbotron {
+    background: url("../img/timg.jpg") no-repeat;
+    background-size:100% 100%;
+}
+

@@ -1,0 +1,8 @@
+/web/__pycache__/
+/web/.idea/
+/web/logs/all/
+/web/logs/error/
+/data/BX-Book-Ratings.csv
+/data/BX-Books.csv
+/data/BX-Users.csv
+.idea

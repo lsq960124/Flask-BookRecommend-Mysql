@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="static/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="static/Flat-UI/dist/css/flat-ui.min.css"/>
+    <script src="static/Flat-UI/dist/js/vendor/jquery.min.js"></script>
+    <script src="static/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="static/Flat-UI/dist/js/flat-ui.min.js"></script>
+    <title></title>
+    <style>
+        .row{
+            margin-left: 20px;
+            margin-right: 20px;;
+        }
+        p {
+            white-space: nowrap;
+            word-wrap: break-word;
+            word-break: break-all;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .line-center{
+            line-height:50px;
+            text-align: center;
+        }
+        .row input{
+            width: 50px;
+        }
+        .list-group-item:hover{
+            background: #27ae60;
+
+        }
+        .list-group-item div:first-child:hover{
+
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        $(function () {
+            $('#myTabs a').click(function (e) {
+                $(this).tab('show')
+            });
+        })
+        function myClick(bookid){
+           location.href = "/bookinfo?bookid="+bookid.toString();
+        }
+        function btnClick(){
+            alert("btn");
+            return false;
+        }
+        $(function(){
+        })
+    </script>
+
+</head>
+<body>
+<!-- Static navbar -->
+<div class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">这什么东西</span>
+            </button>
+            <a class="navbar-brand" href="/">图书推荐系统</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/">首页</a></li>
+                <li><a href="/historical">历史评分</a></li>
+                <li><a href="/user">个人中心</a></li>
+            </ul>
+            {% if not login %}
+                <ul class="nav navbar-nav navbar-right hidden-sm">
+                    <li><a href="/loginForm">登录</a></li>
+                    <li><a href="/registerationForm">注册</a></li>
+                    <li>
+                        <a href="/order"><span class="glyphicon glyphicon-shopping-cart">书单</span></a></li>
+                </ul>
+            {% else %}
+                <ul class="nav navbar-nav navbar-right hidden-sm">
+                    <li><a>{{ useid }}</a></li>
+                    <li><a href="/logout">注销</a></li>
+                    <li>
+                        <a href="/order"><span class="glyphicon glyphicon-shopping-cart">书单</span></a></li>
+                </ul>
+            {% endif %}
+        </div><!--/.nav-collapse -->
+    </div>
+</div>
+
+<div class="container">
+    <div class="row thumbnail center">
+        <div class="col-sm-12">
+            <h1 class="text-center" style="margin-bottom: 30px">历史评分</h1>
+        </div>
+        <div class="col-sm-12 thumbnail">
+            <div class="col-sm-3 line-center">编号</div>
+            <div class="col-sm-2 line-center">名称</div>
+            <div class="col-sm-2 line-center">作者</div>
+            <div class="col-sm-2 line-center">历史评论分数</div>
+            <div class="col-sm-3 line-center">操作</div>
+        </div>
+        <div class="list-group">
+            {% for book in books %}
+            <div class="col-sm-12  list-group-item" onclick="myClick('{{book[3]}}')">
+                <div class="col-sm-3 line-center" >{{book[3]}}</div>
+                <div class="col-sm-2 line-center"><p>{{book[0]}}</p></div>
+                <div class="col-sm-2 line-center"><p>{{book[1]}}</p></div>
+                <div class="col-sm-2 line-center">{{book[4]}}</div>
+                <div class="col-sm-3 line-center">
+                <button class="btn btn-success">查看详情</button>
+                </div>
+            </div>
+            {% endfor %}
+    </div>
+</div>
+
+</body>
+</html>

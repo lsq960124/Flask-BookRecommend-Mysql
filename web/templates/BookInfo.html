@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="static/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="static/Flat-UI/dist/css/flat-ui.min.css"/>
+    <script src="static/Flat-UI/dist/js/vendor/jquery.min.js"></script>
+    <script src="static/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="static/Flat-UI/dist/js/flat-ui.min.js"></script>
+    <title></title>
+    <style>
+        .row{
+            margin-left: 20px;
+            margin-right: 20px;;
+        }
+        .center{
+            text-align: center;
+        }
+         /* 父元素，因为~符号只能匹配下面的兄弟节点，所以使用弹性盒的倒序改变五角星的排列方式 */
+        .box{
+            width:320px;
+            height:60px;
+            display:flex;
+            flex-direction: row-reverse;
+            justify-content: space-between;
+        }
+        /* 隐藏单选 */
+        input{
+            display:none;
+        }
+        /* 五角星默认样式 */
+        input[type="radio"]+label>svg>path{
+            d: path("M27.500,1.501 L36.069,16.899 L53.497,20.217 L41.365,33.051 L43.567,50.499 L27.500,43.032 L11.433,50.499 L13.635,33.051 L1.503,20.217 L18.931,16.899 L27.500,1.501 ");
+            stroke-width:1px;
+            fill:none;
+            stroke:#333;
+        }
+        /* 移入，点击选中的元素和下面的元素变为实心 */
+        input[type="radio"]+label:hover>svg>path,
+        input[type="radio"]+label:hover~input[type="radio"]+label>svg>path,
+        input[type="radio"]:checked+label>svg>path,
+        input[type="radio"]:checked~input[type="radio"]+label>svg>path{
+            stroke-width:0px;
+            fill:#f00;
+        }
+    </style>
+</head>
+<body>
+<!-- Static navbar -->
+<div class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">这什么东西</span>
+            </button>
+            <a class="navbar-brand" href="/">图书推荐系统</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/">首页</a></li>
+                <li><a href="/historical">历史评分</a></li>
+                <li><a href="/user">个人中心</a></li>
+            </ul>
+            {% if not login %}
+                <ul class="nav navbar-nav navbar-right hidden-sm">
+                    <li><a href="/loginForm">登录</a></li>
+                    <li><a href="/registerationForm">注册</a></li>
+                    <li>
+                        <a href="/order"><span class="glyphicon glyphicon-shopping-cart">书单</span></a></li>
+                </ul>
+            {% else %}
+                <ul class="nav navbar-nav navbar-right hidden-sm">
+                    <li><a>{{ useid }}</a></li>
+                    <li><a href="/logout">注销</a></li>
+                    <li>
+                        <a href="/order"><span class="glyphicon glyphicon-shopping-cart">书单</span></a></li>
+                </ul>
+            {% endif %}
+        </div><!--/.nav-collapse -->
+    </div>
+</div>
+<!--content-->
+<div class="row thumbnail" id="bookid" value="{{book_info[1]}}">
+    <div class="col-sm-4">
+            <img style="width: 100%; height: 500px; display: block;" src="{{book_info[4]}}">
+            <div class="caption center">
+                <h3>{{book_info[0]}}</h3>
+                <p>作者:{{book_info[3]}}</p>
+                <p>出版日期:{{book_info[2]}}</p>
+                <p><a class="btn btn-primary btn-block" role="button" href="/addcart?bookid={{book_info[1]}}" bookid="{{ book_info[1] }}">加入购物车</a>
+            </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="caption">
+                <h3>图书介绍</h3>
+                <br/>
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;We present AliMe Assist, an intelligent assistant designed for cre-<br/>
+                    ating an innovative online shopping experience in E-commerce.<br/>
+                    Based on question answering (QA), AliMe Assist offers assistance ser-<br/>
+                    vice, customer service, and chatting service. It is able to take voice<br/>
+                    and text input, incorporate context to QA, and support multi-round<br/>
+                    interaction. Currently, it serves millions of customer questions per<br/>
+                    day and is able to address 85% of them. In this paper, we demon-<br/>
+                    strate the system, present the underlying techniques, and share our<br/>
+                    experience in dealing with real-world QA in the E-commerce field.</p>
+                <br/>
+            </div>
+    </div>
+    {% if not login %}
+    <a href="/loginForm" class="btn btn-primary" role="button">请登录后评分</a>
+    {% else %}
+    <h3>评分</h3>
+    <br/>
+    <div class="box" id="score_" value="{{score}}">
+        <input type="radio" value="five" name="rank" >
+        <label for="5" class="score"><svg width="56.5px" height="53.5px"><path id="score_5"/></svg></label>
+        <input type="radio" value="four" name="rank" >
+        <label for="4" class="score"><svg width="56.5px" height="53.5px"><path id="score_4"/></svg></label>
+        <input type="radio" value="three" name="rank" >
+        <label for="3" class="score"><svg width="56.5px" height="53.5px"><path id="score_3"/></svg></label>
+        <input type="radio" value="two" name="rank">
+        <label for="2" class="score"><svg width="56.5px" height="53.5px"><path id="score_2"/></svg></label>
+        <input type="radio" value="one" name="rank" >
+        <label for="1" class="score"><svg width="56.5px" height="53.5px"><path id="score_1" /></svg></label>
+    </div>
+    {% endif %}
+</div>
+
+<script type="text/javascript">
+
+    var checked_num = $("#score_" ).attr("value")
+    var book_id = $("#bookid" ).attr("value")
+
+    for (var i=0;i<parseInt(checked_num);i++){
+        $("#score_"+(i+1)).css("fill","#f00")
+    }
+
+    $('#score_').on('click', '.score', function (e) {
+        var score = $(this).attr("for")
+
+        for (var i=0;i<5;i++){
+            $("#score_"+(i+1)).css("fill","none")
+        }
+
+
+        for (var i=0;i<parseInt(score);i++){
+            $("#score_"+(i+1)).css("fill","#f00")
+        }
+
+        $.ajax({
+            url:'/rating',
+            type:"POST",
+            data:{"rank":score,"book_id":book_id},
+            success:function (data) {
+                // console.log(data)
+            }
+        })  
+    }); 
+</script>
+</body>
+</html>

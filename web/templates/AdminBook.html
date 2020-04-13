@@ -1,0 +1,102 @@
+<!<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="static/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="static/Flat-UI/dist/css/flat-ui.min.css"/>
+    <script src="static/Flat-UI/dist/js/vendor/jquery.min.js"></script>
+    <script src="static/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="static/Flat-UI/dist/js/flat-ui.min.js"></script>
+    <title></title>
+    <style>
+        .row{
+            margin-left: 20px;
+            margin-right: 20px;;
+        }
+
+        p {
+            white-space: nowrap;
+            word-wrap: break-word;
+            word-break: break-all;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .line-center{
+            line-height:50px;
+            text-align: center;
+        }
+        .row input{
+            width: 100px;
+        }
+        .list-group-item:hover{
+            background: #27ae60;
+
+        }
+        .list-group-item div:first-child:hover{
+
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<!-- Static navbar -->
+<div class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">这什么东西</span>
+            </button>
+            <a class="navbar-brand" href="/admin">图书后台管理系统</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/adminuser">用户信息</a></li>
+                <li><a href="/adminbook">书籍信息</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right hidden-sm">
+                <li><a>{{userid}}</a></li>
+                <li><a href="/logout">注销</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</div>
+<!--content-->
+<div class="container">
+    <div class="row thumbnail center">
+        <div class="col-sm-12">
+            <h1 class="text-center" style="margin-bottom: 30px">书籍信息</h1>
+        </div>
+
+        <div class="col-sm-6">
+            <form class="form-horizontal caption" action="/keyword_book" method="POST" onsubmit="return validate()">
+            <label for="keyword" class="col-sm-3 control-label">关键字</label>
+                <div class="col-sm-8">
+                    <input type="keyword" class="form-control" name="keyword" placeholder="关键字">
+                </div>
+            </form>
+        </div>
+        <div class="col-sm-6 line-center">
+            <a href="/addbook"><button class="btn btn-success">添加书籍</button></a>
+        </div>
+        <div class="col-sm-12 thumbnail">
+            <div class="col-sm-3 line-center">编号</div>
+            <div class="col-sm-2 line-center">标题</div>
+            <div class="col-sm-2 line-center">作者</div>
+            <div class="col-sm-2 line-center">出版商</div>
+        <div class="list-group">
+            {% for book in books %}
+            <div class="col-sm-12  list-group-item" >
+                <div class="col-sm-3 line-center" >{{book[0]}}</div>
+                <div class="col-sm-2 line-center"><p>{{book[1]}}</p></div>
+                <div class="col-sm-2 line-center"><p>{{book[2]}}</p></div>
+                <div class="col-sm-2 line-center"><p>{{book[4]}}</p></div>
+                <div class="col-sm-3 line-center">
+                <a href="/delete_book?bookid={{book[0]}}" bookid="{{ book[0] }}"><button class="btn btn-danger">删除书籍</button></a>
+                </div>
+            </div>
+            {% endfor %}
+    </div>
+</div>
+
+</body>
+</html>
