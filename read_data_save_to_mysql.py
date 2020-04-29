@@ -9,7 +9,7 @@ import pymysql
 
 config =  {'user': 'root',
           'password': '123456',
-          'prot':3300,
+          'port':3300,
           'host': '127.0.0.1',
           'db': 'Book',
           'charset':'utf8'}
