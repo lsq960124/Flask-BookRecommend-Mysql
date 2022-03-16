@@ -97,7 +97,7 @@ def read_yaml(content):
     """读入yaml文件
     """
     fix_yaml_loader()
-    return yaml.load(content)
+    return yaml.safe_load(content)
 
 
 def read_yaml_file(filename):
@@ -105,7 +105,7 @@ def read_yaml_file(filename):
     从本地读入yaml文件
     """
     fix_yaml_loader()
-    return yaml.load(read_file(filename, "utf-8"))
+    return yaml.safe_load(read_file(filename, "utf-8"))
 
 
 def load_config(filename=DEFAULT_CONFIG_LOCATION, **kwargs):
