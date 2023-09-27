@@ -98,7 +98,8 @@ QQ：470581985
 
 ## 项目启动方式：
 
-数据集下载地址[http://www2.informatik.uni-freiburg.de/~cziegler/BX/]
+数据集下载地址
+[https://github.com/ashwanidv100/Recommendation-System---Book-Crossing-Dataset/tree/master/BX-CSV-Dump](https://github.com/ashwanidv100/Recommendation-System---Book-Crossing-Dataset/tree/master/BX-CSV-Dump)
 
 * 将下载好的数据放入data文件夹下
 * 运行read_data_save_to_mysql.py文件 将数据导入到mysql中。
