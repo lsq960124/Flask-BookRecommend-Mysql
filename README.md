@@ -4,7 +4,7 @@
 
 ~~互联网访问地址[http://198.56.183.11:8080](http://198.56.183.11:8080)~~
 
-数据集下载地址[http://www2.informatik.uni-freiburg.de/~cziegler/BX/](http://www2.informatik.uni-freiburg.de/~cziegler/BX/)
+数据集下载地址[[http://www2.informatik.uni-freiburg.de/~cziegler/BX/](https://github.com/ashwanidv100/Recommendation-System---Book-Crossing-Dataset/tree/master/BX-CSV-Dump)]([http://www2.informatik.uni-freiburg.de/~cziegler/BX/](https://github.com/ashwanidv100/Recommendation-System---Book-Crossing-Dataset/tree/master/BX-CSV-Dump))
 
 #### `主页`
 <img src="./image/index.jpg" width="750" height="350">
